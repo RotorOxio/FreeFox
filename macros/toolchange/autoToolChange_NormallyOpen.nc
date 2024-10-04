@@ -72,7 +72,7 @@ M0 (MSG, Please make sure the probe is connected and working. Use only N-C probe
 
 ;Back to relative mode and repeat the probing sequence
 G91
-G38.2 z-[#<PROBE_DISTANCE>] F[#<PROBE_RAPID_FEEDRATE>]	;Probing rapid. IMPORTANT!! This is only for Normally CLOSED devices!!!!
+G38.2 Z-[#<PROBE_DISTANCE>] F[#<PROBE_RAPID_FEEDRATE>]	;Probing rapid. IMPORTANT!! This is only for Normally CLOSED devices!!!!
 G0 Z2
 G38.2 Z-5 F40	;Little kisses routine ;)
 G4 P.25

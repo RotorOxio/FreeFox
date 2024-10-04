@@ -44,9 +44,9 @@ G53 G0 Z[#<TOOL_PROBE_Z>] ;Move to Z probing height
 G91
 G38.4 Z-[#<PROBE_DISTANCE>] F[#<PROBE_RAPID_FEEDRATE>]	;Probing rapid. IMPORTANT!! This is only for Normally CLOSED devices!!!! 
 G0 Z2
-G38.4 Z-5 F40	;Repeating the probing at lower speeds each time to increase the precision. Make a pause on each touch.
+G38.4 Z-5 F40	;Repeating the probing at lower speeds each time to increase the precision. Make a pause on each touch. Engage and disengage strategy
 G4 P.25
-G38.2 Z10 F20
+G38.2 Z10 F20   
 G4 P.25
 G38.4 Z-2 F10
 G4 P.25
