@@ -21,6 +21,8 @@ M70 ;Save modal state
 G91 ; Relative positioning
 G21 ; Use millimeters
 
+M0 (MSG, Please make sure the probe is connected and working)
+
 ;Probe toward right side of hole with a maximum probe distance
 G38.2 X[#<PROBE_DISTANCE>] F[#<PROBE_FEEDRATE_A>]
 G0 X-1 ;retract 1mm
@@ -38,7 +40,7 @@ G4 P.250
 ; Calculate X dimension and set X0 in the active WCS
 #<X_LEFT> = #<_X>
 #<X_CHORD> = #<X_RIGHT> - #<X_LEFT>
-(PRINT, X dimension #<X_CHORD>)
+(DEBUG, X dimension: #<X_CHORD>)
 G0 X[#<X_CHORD>/2]
 #<X_CENTER> = #<_X> ;Store X center G53 coordinate just in case
 G4 P1   ;A dwell time of one second to make sure the planner queue is empty
@@ -61,8 +63,8 @@ G4 P.250
 ; Calculate Y dimension and set Y0 in the active WCS
 #<Y_BTM> = #<_Y>
 #<Y_CHORD> = #<Y_TOP> - #<Y_BTM>
-(PRINT, Y dimension #<Y_CHORD>)
 G0 Y[#<Y_CHORD>/2]
+(DEBUG, Y dimension or Diameter: #<Y_CHORD>)
 #<Y_CENTER> = #<_Y> ;Store Y center G53 coordinate just in case
 ; A dwell time of one second to make sure the planner queue is empty
 G4 P1

@@ -13,12 +13,6 @@
 ;It is recommended to eye-ball it to the hole center. 
 ;Please make sure that parameter PROBE_MAJOR_RETRACT plus your biggest bit diameter shouldn't exceed the hole diameter.
 
-M70 ;Save modal state
-
-; Wait until the planner queue is empty
-M0 (MSG, Please make sure the bit is positioned inside the hole and the probe is properly connected)
-G4 P1
-
 ; Set user-defined variables
 #<Z_PROBE_THICKNESS> = 5.08	;Thickness of the probe plate
 #<PROBE_DISTANCE> = 20  ;Max distance for probing. No more than the hole diameter
@@ -30,9 +24,10 @@ G4 P1
 #<Z_FINAL> = 50	; Final height above probe.
 
 M70 ;Save modal state
-
 G91 ; Relative positioning
 G21 ;Use millimeters
+
+M0 (MSG, Please make sure the bit is positioned inside the hole and the probe is properly connected)
 
 ; Probe toward right side of hole with a maximum probe distance
 G38.2 X[#<PROBE_DISTANCE>] F[#<PROBE_FEEDRATE_A>]
@@ -49,9 +44,9 @@ G4 P.25 ;Pause before storing value
 #<X_LEFT> = #<_X>
 #<X_CHORD> = #<X_RIGHT> - #<X_LEFT>
 G0 X[#<X_CHORD>/2]
-#<X_CENTER> = #<_X>	;get X-value of hole center for some reason
 ; A dwell time of one second to make sure the planner queue is empty
 G4 P1
+#<X_CENTER> = #<_X>	;get X-value of hole center for some reason
 G10 L20 P0 X0 ;set X0 in current WCS
 
 ; Probe toward top side of hole with a maximum probe distance
@@ -69,16 +64,15 @@ G4 P0.25 ;Pause before storing the value
 #<Y_BTM> = #<_Y>
 #<Y_CHORD> = #<Y_TOP> - #<Y_BTM>
 #<HOLE_RADIUS> = #<Y_CHORD>/2
-
 G0 Y[#<HOLE_RADIUS>]
-#<Y_CENTER> = #<_Y>	;get Y-value of hole center for some reason
 ; A dwell time of one second to make sure the planner queue is empty
 G4 P1
+#<Y_CENTER> = #<_Y>	;get Y-value of hole center for some reason
 G10 L20 P0 Y0
 
 ;Raise Z above the plate surface
 G0 Z[#<Z_PROBE>]
-(PRINT, Hole radius #<HOLE_RADIUS>)
+(DEBUG, Hole radius: #<HOLE_RADIUS>) ;Comment this line if you don't need to display hole radius every time
 M0 (MSG, XY completed. Click to proceed with Z Probe)
 
 ;Rapid to XY coordinates on the plate surface for Z probe location
@@ -90,7 +84,6 @@ G0 Z2 ;retract 2mm
 G38.2 Z-5 F[#<PROBE_FEEDRATE_B>] ;Slow Probe
 G10 L20 P0 Z[#<Z_PROBE_THICKNESS>]
 G0 Z[#<Z_FINAL>]	;raise Z
-
 G90	;absolute distance
 G0 X0 Y0
 ;G0 Z0 ;Comment or uncomment this line depending if you want to go to Z0 or not at the end of the routine

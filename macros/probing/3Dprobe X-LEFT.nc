@@ -18,7 +18,7 @@
 
 M70 ;Save modal state
 G21 G91 ;Set units to mm and activate relative mode
-M0 (MSG, Please make sure the probe is connected and working.)  ;Safety message
+M0 (MSG, Please make sure the probe is connected and working)
 
 G38.2 X[#<MAX_PROBE_DISTANCE>] F[#<RAPID_PROBING>] ;Probing rapid. IMPORTANT!! This is only for Normally OPEN devices!!!!
 G0 X-1 ;Retract and start kissing routine ;)
@@ -31,6 +31,6 @@ G4 P.25
 G38.4 X-2 F5
 G4 P.25
 
-G10 L20 P0 #<X_OFFSET>
+G10 L20 P0 X[#<X_OFFSET>]
 G90 ;Back to absolute mode
 M72 ;Restore modal state and end of macro

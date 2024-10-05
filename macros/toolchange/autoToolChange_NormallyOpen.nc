@@ -11,8 +11,6 @@
 ;Macro for semi automated tool changes. USE IT ONLY WITH NORMALLY OPEN probes or toolsetters.
 ;Moves the machine to a known machine coordinates specific point where a tool setter is positioned. Calculates the Z offset between the current tool and the new tools and applies it to the current WCS.
 
-G4 P1	;Wait 1 second to make sure the planner queue is empty
-
 ; User-defined variables
 #<SAFE_HEIGHT> = 145	;Z position in machine coordinates to raise the spindle. Make sure it is a safe height in machine coordinates
 

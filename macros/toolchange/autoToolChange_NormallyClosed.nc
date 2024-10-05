@@ -11,8 +11,6 @@
 ;Macro for semi automated tool changes. USE IT ONLY WITH NORMALLY CLOSED probes or toolsetters.
 ;Moves the machine to a known machine coordinates specific point where a tool setter is positioned. Calculates the Z offset between the current tool and the new tools and applies it to the current WCS.
 
-G4 P1	;Wait 1 second to make sure the planner queue is empty
-
 ; User-defined variables
 #<SAFE_HEIGHT> = 145 	;Z position in machine coordinates to raise the spindle. Make sure it is a safe height in machine coordinates
 
@@ -62,10 +60,8 @@ G0 Z5
 G90
 G53 G0 Z[#<SAFE_HEIGHT>]
 
-
 ;Pause for manual tool change & probing
 M0 (MSG, Change your tool now. Click continue when ready)
-
 
 ;After the tool change, go back to Z probing height
 G53 G0 Z[#<TOOL_PROBE_Z>]
@@ -90,12 +86,11 @@ G10 L20 P0 Z[#<ORIGINAL_TOOL>]
 G90 ;Back to absolute mode and raise to safe height
 G53 G0 Z[#<SAFE_HEIGHT>]
 
-; Pause to remove the touch plate if neccessary, remove wire and clear the path back to the workpiece.
+;Pause to remove the touch plate if neccessary, remove wire and clear the path back to the workpiece.
 M0 (MSG, Remove touch plate and wires if neccessary. Make path clear to go back to the previous position)
-;Go to previous work position
 
-G0 X[#<X0>] Y[#<Y0>]
+G0 X[#<X0>] Y[#<Y0>] ;Go to previous work position
 G0 Z[#<Z0>] ; Please comment/uncomment this command depending if you prefer to go back to previous Z or not
 
-; Restore modal state
+;Restore modal state
 M72
