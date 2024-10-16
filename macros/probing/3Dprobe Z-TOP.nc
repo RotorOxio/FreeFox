@@ -32,5 +32,6 @@ G38.4 Z2 F5
 G4 P.25
 
 G10 L20 P0 Z[#<Z_OFFSET>]
-G90 ;Back to absolute mode
-M72 ;Restore modal state and end of macro
+
+M72 ;Restore modal state
+;End of macro

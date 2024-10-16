@@ -13,8 +13,10 @@
 #<PROBE_DISTANCE> = 70      ;Maximum expected diameter or side lenght
 #<PROBE_FEEDRATE_A> = 75    ;Rapid probing
 #<PROBE_FEEDRATE_B> = 25    ;Slow probing to increase precision
-#<PROBE_MAJOR_RETRACT> = 2  ;Distance of retract before probing opposite side
-
+#<PROBE_MAJOR_RETRACT> = 5  ;Distance of retract before probing opposite side
+#<PROBE_DIAMETER> = 1.75	;Diameter of the probing tool. ONLY TO DISPLAY INFO. If you use several probing tools, set this to zero and add the diameter manually
+#<WIDTH> = 0
+#<HEIGHT> = 0
 
 M70 ;Save modal state
 
@@ -40,11 +42,12 @@ G4 P.250
 ; Calculate X dimension and set X0 in the active WCS
 #<X_LEFT> = #<_X>
 #<X_CHORD> = #<X_RIGHT> - #<X_LEFT>
-(DEBUG, X dimension: #<X_CHORD>)
 G0 X[#<X_CHORD>/2]
 #<X_CENTER> = #<_X> ;Store X center G53 coordinate just in case
+#<WIDTH> = [#<X_CHORD>+#<PROBE_DIAMETER>]
 G4 P1   ;A dwell time of one second to make sure the planner queue is empty
 G10 L20 P0 X0 ;Set current position as X0 in the active WCS
+M0 (DEBUG, X dimension: #<WIDTH>)
 
 ; Probe toward top side of hole with a maximum probe distance
 G38.2 Y[#<PROBE_DISTANCE>] F[#<PROBE_FEEDRATE_A>]
@@ -64,11 +67,12 @@ G4 P.250
 #<Y_BTM> = #<_Y>
 #<Y_CHORD> = #<Y_TOP> - #<Y_BTM>
 G0 Y[#<Y_CHORD>/2]
-(DEBUG, Y dimension or Diameter: #<Y_CHORD>)
 #<Y_CENTER> = #<_Y> ;Store Y center G53 coordinate just in case
+#<HEIGHT> = [#<Y_CHORD>+#<PROBE_DIAMETER>]
 ; A dwell time of one second to make sure the planner queue is empty
 G4 P1
 G10 L20 P0 Y0 ;Set current position as Y0 in the active WCS
+M0 (DEBUG, Y dimension / Radius: #<HEIGHT>)
 
-G90 ;restore absolute mode
-M72 ;restore unit and distance modal state
+M72 ;restore modal state
+;End of macro

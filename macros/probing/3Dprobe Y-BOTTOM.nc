@@ -11,10 +11,10 @@
 ;Y offset after probing is end ball radius - yaw displacement
 ;If you plan on using an end mill or calibrated rod, please adjust the offset accordingly
 
-#<Y_OFFSET> = -0.98
+#<Y_OFFSET> = 0.98
 #<MAX_PROBE_DISTANCE> = 25 ;Maximum distance for probing.
 #<RAPID_PROBING> = 50 ;Max speed for probing
-
+#<PROBE_RETRACT> = 5
 
 M70 ;Save modal state
 G21 G91 ;Set units to mm and activate relative mode
@@ -31,6 +31,8 @@ G4 P.25
 G38.4 Y-2 F5
 G4 P.25
 
-G10 L20 P0 Y[#<Y_OFFSET>]
-G90 ;Back to absolute mode
-M72 ;Restore modal state and end of macro
+G10 L20 P0 Y-[#<Y_OFFSET>]
+G0 Y-[#<PROBE_RETRACT>] ;Retract from material
+
+M72 ;Restore modal state
+;End of macro
