@@ -15,7 +15,7 @@
 
 ; Set user-defined variables
 #<Z_PROBE_THICKNESS> = 5.08	;Thickness of the probe plate
-#<PROBE_DISTANCE> = 20  ;Max distance for probing. No more than the hole diameter
+#<PROBE_DISTANCE> = 15  ;Max distance for probing. No more than the hole diameter
 #<PROBE_FEEDRATE_A> = 75 ;Rapid probe
 #<PROBE_FEEDRATE_B> = 25 ;Slow probe to increase precision
 #<PROBE_MAJOR_RETRACT> = 5  ;Retract distance after probing one side. This number plus your biggest bit diameter shouldn't exceed the hole diameter.
